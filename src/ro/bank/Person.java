@@ -5,8 +5,7 @@ import java.util.List;
 
 public class Person {
     //O persoana are mai multe conturi
-   // List<Account> accountList = new ArrayList<>();
-
+    // List<Account> accountList = new ArrayList<>();
 
 
 }
