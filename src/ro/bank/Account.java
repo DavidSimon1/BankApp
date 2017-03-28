@@ -1,6 +1,14 @@
 package ro.bank;
 
 public class Account {
-    Person person = new Person();
+   private Person person = new Person();
     // Un cont are o persoana
+    public void setPerson (Person person) {
+        this.person = person;
+    }
+    public Person getPerson (){
+        return person;
+    }
+
 }
+
