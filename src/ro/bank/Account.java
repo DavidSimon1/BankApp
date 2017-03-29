@@ -1,7 +1,7 @@
 package ro.bank;
 
 public class Account {
-    private Person person = new Person();
+    private Person person;
 
     // Un cont are o persoana
     public void setPerson(Person person) {

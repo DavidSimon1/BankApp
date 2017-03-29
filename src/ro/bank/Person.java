@@ -1,11 +1,20 @@
 package ro.bank;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Person {
-    //O persoana are mai multe conturi
-    // List<Account> accountList = new ArrayList<>();
 
+
+    private String name;
+    private int age;
+    private boolean gender;
+
+    //true = male;
+    //false = female;
+    public Person(String name, int age, boolean gender) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        // // TODO: 3/29/2017 getters
+    }
 
 }
+
