@@ -50,13 +50,13 @@ public class BankView extends JFrame implements ActionListener {
         personMenu.add("Remove person");
         personMenu.add("Edit person");
 
-
         this.add(menu);
         this.add(panel);
         setVisible(true);
     }
 
     public static void main(String[] args) {
+
         new BankView();
     }
 
@@ -65,15 +65,5 @@ public class BankView extends JFrame implements ActionListener {
         if (e.getSource() == save) {
             System.out.println("Am apasat save");
         }
-        /*
-
-      // in meniul file : save data, load data
-        in meniul account : wiew accounts, create account , remove account, deposit money, retire money;
-        in meniul persons : view persons, add person, remove person, edit person;
-        todo
-
-         */
-
-
     }
 }

@@ -2,7 +2,7 @@ package ro.bank;
 
 public interface BankProc {
 
-    void createAcount(Account account);
+    void createAccount(Account account);
 
     void removeAccount(int id);
 

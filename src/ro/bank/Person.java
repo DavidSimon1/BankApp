@@ -12,19 +12,15 @@ public class Person {
         this.name = name;
         this.age = age;
         this.gender = gender;
-        // // TODO: 3/29/2017 getters
     }
-    public String getName (){
+    public String getName() {
         return name;
     }
-    public int getAge (){
+    public int getAge() {
         return age;
     }
-    public boolean getGender () {
+    public boolean getGender() {
         return gender;
-
-
-         
 
     }
 }

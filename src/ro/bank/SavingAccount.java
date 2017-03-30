@@ -15,10 +15,20 @@ public class SavingAccount extends Account {
         }
         return sufficient;
     }
+
     @Override
     public boolean depositMoney(double sum) {
-        return false;
-    }
-    //// TODO: 3/30/2017 Daca suma este mai mica de 5000, n-o pot introduce
-}
+        boolean insufficient;
+        if (sum < MIN_DEPOSIT) {
+            insufficient = true; }
+             else {
+            insufficient = false;
+            sold = sold + sum;
+            }
+        return insufficient;
+            }
+
+        }
+        //// TODO: 3/30/2017 Daca suma este mai mica de 5000, n-o pot introduce
+
 

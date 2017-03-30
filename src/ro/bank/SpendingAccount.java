@@ -19,7 +19,15 @@ public class SpendingAccount extends Account {
 
     @Override
     public boolean depositMoney(double sum) {
-        return false;
+        boolean insuficient;
+        if (sum > 0) {
+            insuficient = false;
+        }
+        else {
+            insuficient = true;
+        }
+        sold = sold + sum;
+        return insuficient ;
     }
     //// TODO: 3/30/2017
 }
