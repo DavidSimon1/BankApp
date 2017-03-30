@@ -2,7 +2,6 @@ package ro.bank;
 
 public class Person {
 
-
     private String name;
     private int age;
     private boolean gender;
@@ -23,6 +22,9 @@ public class Person {
     }
     public boolean getGender () {
         return gender;
+
+
+         
 
     }
 }
