@@ -22,20 +22,20 @@ public class Bank implements BankProc {
                 accounts.remove(id);
             }
         }
-        //sterg contu cu idu respectiv din lista - caut/sterg
     }
+
     @Override
     public void depositMoney(int id, double sum) {
-        //caut contul si apelez depositmoney.
+
         for (int i = 0; i < accounts.size(); i++) {
             Account current = accounts.get(i);
 
-                if (id == current.getId()) {
-                    current.depositMoney(sum);
+            if (id == current.getId()) {
+                current.depositMoney(sum);
 
-                }
             }
         }
+    }
 
     @Override
     public void retireMoney(int id, double sum) {

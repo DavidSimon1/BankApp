@@ -13,12 +13,15 @@ public class Person {
         this.age = age;
         this.gender = gender;
     }
+
     public String getName() {
         return name;
     }
+
     public int getAge() {
         return age;
     }
+
     public boolean getGender() {
         return gender;
 

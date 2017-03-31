@@ -20,15 +20,14 @@ public class SavingAccount extends Account {
     public boolean depositMoney(double sum) {
         boolean insufficient;
         if (sum < MIN_DEPOSIT) {
-            insufficient = true; }
-             else {
+            insufficient = true;
+        } else {
             insufficient = false;
             sold = sold + sum;
-            }
-        return insufficient;
-            }
-
         }
-        //// TODO: 3/30/2017 Daca suma este mai mica de 5000, n-o pot introduce
+        return insufficient;
+    }
+}
+
 
 
