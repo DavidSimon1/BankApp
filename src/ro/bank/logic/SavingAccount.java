@@ -1,4 +1,4 @@
-package ro.bank;
+package ro.bank.logic;
 
 public class SavingAccount extends Account {
 

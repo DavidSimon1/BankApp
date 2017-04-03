@@ -1,4 +1,4 @@
-package ro.bank;
+package ro.bank.logic;
 
 public class SpendingAccount extends Account {
     private static final double COMMISSION = 0.1;

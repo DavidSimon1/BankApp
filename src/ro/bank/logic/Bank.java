@@ -1,4 +1,4 @@
-package ro.bank;
+package ro.bank.logic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +40,9 @@ public class Bank implements BankProc {
     @Override
     public void retireMoney(int id, double sum) {
         for (int i = 0; i < accounts.size(); i++) {
-            Account curent = accounts.get(i);
-            if (id == curent.getId()) {
-                curent.retireMoney(sum);
+            Account current = accounts.get(i);
+            if (id == current.getId()) {
+                current.retireMoney(sum);
             }
         }
     }

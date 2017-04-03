@@ -1,4 +1,4 @@
-package ro.bank;
+package ro.bank.logic;
 
 public interface BankProc {
 
@@ -10,6 +10,8 @@ public interface BankProc {
 
     void retireMoney(int id, double sum);
 
-}
+    }
+
+
 
 

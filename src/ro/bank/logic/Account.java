@@ -1,4 +1,6 @@
-package ro.bank;
+package ro.bank.logic;
+
+import ro.bank.model.Person;
 
 public abstract class Account {
     private Person person;

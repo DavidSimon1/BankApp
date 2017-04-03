@@ -1,4 +1,4 @@
-package ro.bank;
+package ro.bank.model;
 
 public class Person {
 

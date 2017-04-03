@@ -1,4 +1,4 @@
-package ro.bank;
+package ro.bank.view;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
