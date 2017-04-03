@@ -10,7 +10,8 @@ public abstract class Account {
 
     public Account(Person person) {
         this.person = person;
-        this.id = nr++;
+        this.id = nr+1;
+        nr +=1;
     }
 
     public Account() {
@@ -28,6 +29,10 @@ public abstract class Account {
 
     public Person getPerson() {
         return person;
+    }
+
+    public double getSold() {
+        return sold;
     }
 
     public int getId() {
