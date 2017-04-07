@@ -58,7 +58,7 @@ public class FileRepository implements Repository {
 
     public static void main(String[] args) {
         FileRepository fileRepository = new FileRepository();
-
+/* testare saveData()
         Person ion = new Person("Ion", 19, true);
         Account account1 = new SavingAccount(ion);
         account1.depositMoney(5100);
@@ -78,21 +78,65 @@ public class FileRepository implements Repository {
         accountList.add(account2);
         accountList.add(account3);
         fileRepository.saveData(accountList);
+  */
+
+        List<Account> accountList = fileRepository.loadData();
+        for (int i = 0; i < accountList.size(); i++) {
+            Account account = accountList.get(i);
+            Person person = account.getPerson();
+            System.out.println("id: " + account.getId() + " name: " + person.getName() + " age: " + person.getAge());
+        }
     }
 
-
     public List<Account> loadData() {
-        String data = "3|5300.0|Maria|20|false";
-        String[] splitted = data.split("\\|");
-        System.out.println(splitted[0]);
-        System.out.println(splitted[1]);
-        System.out.println(splitted[2]);
-        System.out.println(splitted[3]);
-        System.out.println(splitted[4]);
+        File input = new File(FILE_NAME);
+        FileReader reader = null;
+        BufferedReader bufferedReader = null;
+        List<Account> accounts = new ArrayList<>();
 
-        boolean sex = Boolean.parseBoolean(splitted[4]);
+        try {
+            reader = new FileReader(input);
+            bufferedReader = new BufferedReader(reader);
+            String line = bufferedReader.readLine();
 
+            while (line != null) {
+                String[] splitted = line.split("\\|");
+                //3|5300.0|Maria|20|false|SAVING
+                String name = splitted[2];
+                int age = Integer.parseInt(splitted[3]);
+                boolean gender = Boolean.parseBoolean(splitted[4]);
+                int id = Integer.parseInt(splitted[0]);
+                double sold = Double.parseDouble(splitted[1]);
 
-        return null;
+                Person person = new Person(name, age, gender);
+
+                String type = splitted[5];
+                AccountType accountType = AccountType.valueOf(type);
+                Account account;
+                if (accountType == AccountType.SAVING) {
+                    account = new SavingAccount(person);
+                } else {
+                    account = new SpendingAccount(person);
+                }
+
+                account.setId(id);
+                account.setSold(sold);
+                accounts.add(account);
+                line = bufferedReader.readLine();
+            }
+
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return accounts;
     }
 }

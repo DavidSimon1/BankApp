@@ -10,8 +10,8 @@ public abstract class Account {
 
     public Account(Person person) {
         this.person = person;
-        this.id = nr+1;
-        nr +=1;
+        this.id = nr + 1;
+        nr += 1;
     }
 
     public Account() {
@@ -35,8 +35,16 @@ public abstract class Account {
         return sold;
     }
 
+    public void setSold(double sold) {
+        this.sold = sold;
+    }
+
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 }
