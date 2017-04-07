@@ -1,8 +1,19 @@
 package ro.bank.view;
 
+import ro.bank.data.source.FileRepository;
+import ro.bank.data.source.Repository;
+import ro.bank.logic.Account;
+import ro.bank.logic.Bank;
+import ro.bank.logic.BankProc;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class BankView extends JFrame implements ActionListener {
 
@@ -24,6 +35,8 @@ public class BankView extends JFrame implements ActionListener {
     private JMenuItem removePerson = new JMenuItem("Remove Person");
     private JMenuItem editPerson = new JMenuItem("Edit Person");
 
+    private BankProc bank = new Bank();
+    private Repository fileRepository = new FileRepository();
 
     public BankView() {
         super("BankApp");
@@ -38,6 +51,8 @@ public class BankView extends JFrame implements ActionListener {
 
         fileMenu.add(save);
         fileMenu.add(load);
+        save.addActionListener(this);
+        load.addActionListener(this);
 
         accountMenu.add("View Accounts");
         accountMenu.add("Create Account");
@@ -62,8 +77,28 @@ public class BankView extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        List<Account> accounts = null;
+
+        /*Date date = new Date();
+        System.out.println(new Timestamp(date.getTime()));
+        */
+
+        if (e.getSource() == load) {
+            System.out.println("Am apasat load");
+            accounts = fileRepository.loadData();
+        }
         if (e.getSource() == save) {
             System.out.println("Am apasat save");
+            if (accounts != null) {
+                fileRepository.saveData(accounts);
+            }
+
+        }
+        if (accounts != null) {
+            for (int x = 0; x < accounts.size(); x++) {
+                Account current = accounts.get(x);
+                System.out.println("id: " + current.getId());
+            }
         }
     }
 }

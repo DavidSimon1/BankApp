@@ -56,38 +56,6 @@ public class FileRepository implements Repository {
         }
     }
 
-    public static void main(String[] args) {
-        FileRepository fileRepository = new FileRepository();
-/* testare saveData()
-        Person ion = new Person("Ion", 19, true);
-        Account account1 = new SavingAccount(ion);
-        account1.depositMoney(5100);
-
-
-        Person ionel = new Person("Ionel", 24, true);
-        Account account2 = new SpendingAccount(ionel);
-        account2.depositMoney(5200);
-
-
-        Person maria = new Person("Maria", 20, false);
-        Account account3 = new SavingAccount(maria);
-        account3.depositMoney(5300);
-
-        List<Account> accountList = new ArrayList<>();
-        accountList.add(account1);
-        accountList.add(account2);
-        accountList.add(account3);
-        fileRepository.saveData(accountList);
-  */
-
-        List<Account> accountList = fileRepository.loadData();
-        for (int i = 0; i < accountList.size(); i++) {
-            Account account = accountList.get(i);
-            Person person = account.getPerson();
-            System.out.println("id: " + account.getId() + " name: " + person.getName() + " age: " + person.getAge());
-        }
-    }
-
     public List<Account> loadData() {
         File input = new File(FILE_NAME);
         FileReader reader = null;
