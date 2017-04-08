@@ -1,0 +1,6 @@
+1|5100.0|Ion|19|true|SAVING
+2|5200.0|Ionel|24|true|SPENDING
+4|5360.0|Paul|21|true|SAVING
+5|5350.0|Maria|20|false|SPENDING
+6|5330.0|Costel|27|true|SAVING
+7|5370.0|Ana|23|false|SPENDING

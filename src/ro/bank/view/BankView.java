@@ -5,8 +5,10 @@ import ro.bank.data.source.Repository;
 import ro.bank.logic.Account;
 import ro.bank.logic.Bank;
 import ro.bank.logic.BankProc;
+import ro.bank.model.Person;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Time;
@@ -22,6 +24,7 @@ public class BankView extends JFrame implements ActionListener {
     private JMenu fileMenu = new JMenu("File");
     private JMenu accountMenu = new JMenu("Account");
     private JMenu personMenu = new JMenu("Person");
+    private JTable table;
 
     private JMenuItem save = new JMenuItem("Save Data");
     private JMenuItem load = new JMenuItem("Load Data");
@@ -54,16 +57,18 @@ public class BankView extends JFrame implements ActionListener {
         save.addActionListener(this);
         load.addActionListener(this);
 
-        accountMenu.add("View Accounts");
-        accountMenu.add("Create Account");
-        accountMenu.add("Remove Account");
-        accountMenu.add("Deposit Money");
-        accountMenu.add("Retire Money");
+        accountMenu.add(viewAccounts);
+        viewAccounts.addActionListener(this);
+        accountMenu.add(createAccount);
+        accountMenu.add(removeAccount);
+        removeAccount.addActionListener(this);
+        accountMenu.add(depositMoney);
+        accountMenu.add(retireMoney);
 
-        personMenu.add("View Persons");
-        personMenu.add("Add person");
-        personMenu.add("Remove person");
-        personMenu.add("Edit person");
+        personMenu.add(viewPersons);
+        personMenu.add(addPerson);
+        personMenu.add(removePerson);
+        personMenu.add(editPerson);
 
         this.add(menu);
         this.add(panel);
@@ -79,26 +84,61 @@ public class BankView extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         List<Account> accounts = null;
 
-        /*Date date = new Date();
-        System.out.println(new Timestamp(date.getTime()));
-        */
-
         if (e.getSource() == load) {
             System.out.println("Am apasat load");
             accounts = fileRepository.loadData();
+            ((Bank) bank).setAccount(accounts);
         }
         if (e.getSource() == save) {
+            accounts = ((Bank) bank).getAccount();
             System.out.println("Am apasat save");
             if (accounts != null) {
                 fileRepository.saveData(accounts);
             }
 
         }
-        if (accounts != null) {
-            for (int x = 0; x < accounts.size(); x++) {
-                Account current = accounts.get(x);
-                System.out.println("id: " + current.getId());
+        if (e.getSource() == viewAccounts) {
+            String[] columnNames = {"id", "sold", "owner", "age", "gender"};
+            accounts = ((Bank) bank).getAccount();
+            Object[][] objects = new Object[accounts.size()][columnNames.length];
+            for (int i = 0; i < accounts.size(); i++) {
+                Account current = accounts.get(i);
+                Person person = current.getPerson();
+                for (int j = 0; j < columnNames.length; j++) {
+                    if (j == 0) {
+                        objects[i][j] = current.getId();
+                    }
+                    if (j == 1) {
+                        objects[i][j] = current.getSold();
+                    }
+                    if (j == 2) {
+                        objects[i][j] = person.getName();
+                    }
+                    if (j == 3) {
+                        objects[i][j] = person.getAge();
+                    }
+                    if (j == 4) {
+                        //// TODO: 4/8/2017
+                        //afisare male/female pt boolean
+                        objects[i][j] = person.getGender();
+                    }
+                }
             }
+
+            JTable table = new JTable(objects, columnNames);
+            panel.removeAll();
+            JScrollPane scrollPane = new JScrollPane(table);
+            scrollPane.setBounds(50, 50, 500, 300);
+            panel.add(scrollPane);
+            repaint();
+
+        }
+        if (e.getSource() == removeAccount) {
+            String input = JOptionPane.showInputDialog(panel, "Enter the id of the account to delete");
+            if (input != null && !input.isEmpty()) {
+                bank.removeAccount(Integer.parseInt(input));
+            }
+
         }
     }
 }

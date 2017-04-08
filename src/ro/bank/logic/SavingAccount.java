@@ -10,9 +10,6 @@ public class SavingAccount extends Account {
         super(person);
     }
 
-
-
-
     @Override
     public boolean retireMoney(double sum) {
         boolean sufficient;

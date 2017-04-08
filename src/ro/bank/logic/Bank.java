@@ -1,6 +1,7 @@
 package ro.bank.logic;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Bank implements BankProc {
@@ -16,10 +17,11 @@ public class Bank implements BankProc {
 
     @Override
     public void removeAccount(int id) {
-        for (int i = 0; i < accounts.size(); i++) {
-            Account current = accounts.get(i);
+        Iterator<Account> iterator = accounts.iterator();
+        while (iterator.hasNext()) {
+            Account current = iterator.next();
             if (id == current.getId()) {
-                accounts.remove(id);
+                iterator.remove();
             }
         }
     }
