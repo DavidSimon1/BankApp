@@ -28,13 +28,10 @@ public class Bank implements BankProc {
 
     @Override
     public void depositMoney(int id, double sum) {
-
         for (int i = 0; i < accounts.size(); i++) {
             Account current = accounts.get(i);
-
             if (id == current.getId()) {
                 current.depositMoney(sum);
-
             }
         }
     }

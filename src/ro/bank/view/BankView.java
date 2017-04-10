@@ -2,15 +2,16 @@ package ro.bank.view;
 
 import ro.bank.data.source.FileRepository;
 import ro.bank.data.source.Repository;
-import ro.bank.logic.Account;
-import ro.bank.logic.Bank;
-import ro.bank.logic.BankProc;
+import ro.bank.exceptions.UnsupportedAccountType;
+import ro.bank.logic.*;
+import ro.bank.model.AccountType;
 import ro.bank.model.Person;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Arc2D;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -60,9 +61,11 @@ public class BankView extends JFrame implements ActionListener {
         accountMenu.add(viewAccounts);
         viewAccounts.addActionListener(this);
         accountMenu.add(createAccount);
+        createAccount.addActionListener(this);
         accountMenu.add(removeAccount);
         removeAccount.addActionListener(this);
         accountMenu.add(depositMoney);
+        depositMoney.addActionListener(this);
         accountMenu.add(retireMoney);
 
         personMenu.add(viewPersons);
@@ -118,6 +121,7 @@ public class BankView extends JFrame implements ActionListener {
                         objects[i][j] = person.getAge();
                     }
                     if (j == 4) {
+
                         //// TODO: 4/8/2017
                         //afisare male/female pt boolean
                         objects[i][j] = person.getGender();
@@ -140,5 +144,81 @@ public class BankView extends JFrame implements ActionListener {
             }
 
         }
+        if (e.getSource() == createAccount) {
+            String personName;
+            boolean gender;
+            int age;
+            double sold;
+            AccountType accountType;
+            String inputName = JOptionPane.showInputDialog(panel, "Enter person name");
+            if (inputName != null && !inputName.isEmpty()) {
+                personName = inputName;
+                String inputAge = JOptionPane.showInputDialog(panel, "Enter person age");
+                if (inputAge != null && !inputAge.isEmpty()) {
+                    age = Integer.parseInt(inputAge);
+                    //// TODO: 4/9/2017
+                    //male/female - true,false
+
+                    String[] genderOptions = {"true", "false"};
+                    String inputGender = (String) JOptionPane.showInputDialog(panel, "Enter the person gender",
+                            "", JOptionPane.PLAIN_MESSAGE, null, genderOptions, null);
+                    if (inputGender != null && !inputGender.isEmpty()) {
+                        gender = Boolean.parseBoolean(inputGender);
+                        String[] accountOptions = {"SPENDING", "SAVING"};
+                        String inputAccountType = (String) JOptionPane.showInputDialog(panel, "Enter the account type",
+                                "", JOptionPane.PLAIN_MESSAGE, null, accountOptions, null);
+                        if (inputAccountType != null && !inputAccountType.isEmpty()) {
+                            accountType = AccountType.valueOf(inputAccountType);
+                            String inputSold = JOptionPane.showInputDialog(panel, "Enter the sum");
+                            if (inputSold != null && !inputSold.isEmpty()) {
+                                sold = Double.parseDouble(inputSold);
+                                Person person = new Person(personName, age, gender);
+                                Account account;
+                                if (accountType == AccountType.SAVING) {
+                                    account = new SavingAccount(person);
+                                } else if (accountType == AccountType.SPENDING) {
+                                    account = new SpendingAccount(person);
+                                } else {
+                                    throw new UnsupportedAccountType();
+                                }
+                                account.setSold(sold);
+                                bank.createAccount(account);
+                            } else {
+                                JOptionPane.showMessageDialog(panel, "The sold must not be empty");
+                            }
+
+                        } else {
+                            JOptionPane.showMessageDialog(panel, "The acccount type  must not be empty");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(panel, "The gender field must not be empty");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(panel, "The age field  must not be empty");
+                }
+            } else {
+                JOptionPane.showMessageDialog(panel, "The person name must not be empty");
+            }
+        }
+        if (e.getSource() == depositMoney) {
+            int id;
+            double sum;
+            String inputId = JOptionPane.showInputDialog(panel, "Enter the account id");
+            if (inputId != null && !inputId.isEmpty()) {
+                id = Integer.parseInt(inputId);
+                String inputSum = JOptionPane.showInputDialog(panel, "Enter the sum of money");
+                if (inputSum != null && !inputSum.isEmpty()) {
+                    sum = Double.parseDouble(inputSum);
+                    bank.depositMoney(id, sum);
+                } else {
+                    JOptionPane.showMessageDialog(panel, "You must enter a sum");
+                }
+            } else {
+                JOptionPane.showMessageDialog(panel, "You must enter an id ");
+            }
+        }
+        //// TODO: 4/9/2017
+
+        // retire money
     }
 }
