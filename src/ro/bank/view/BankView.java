@@ -1,5 +1,6 @@
 package ro.bank.view;
 
+import org.omg.PortableServer.THREAD_POLICY_ID;
 import ro.bank.data.source.FileRepository;
 import ro.bank.data.source.Repository;
 import ro.bank.exceptions.UnsupportedAccountType;
@@ -67,6 +68,7 @@ public class BankView extends JFrame implements ActionListener {
         accountMenu.add(depositMoney);
         depositMoney.addActionListener(this);
         accountMenu.add(retireMoney);
+        retireMoney.addActionListener(this);
 
         personMenu.add(viewPersons);
         personMenu.add(addPerson);
@@ -216,6 +218,24 @@ public class BankView extends JFrame implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(panel, "You must enter an id ");
             }
+        }
+        if (e.getSource() == retireMoney) {
+            int id;
+            double sum;
+            String inputId = JOptionPane.showInputDialog(panel, "Enter the account id");
+            if (inputId != null && !inputId.isEmpty()) {
+                id = Integer.parseInt(inputId);
+                String inputSum = JOptionPane.showInputDialog(panel, "Enter the sum of money");
+                if (inputSum != null && !inputSum.isEmpty()) {
+                    sum = Double.parseDouble(inputSum);
+                    bank.retireMoney(id, sum);
+                } else {
+                    JOptionPane.showMessageDialog(panel, "You must enter a sum");
+                }
+            } else {
+                JOptionPane.showMessageDialog(panel, "You must enter an id");
+            }
+
         }
         //// TODO: 4/9/2017
 
