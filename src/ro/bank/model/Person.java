@@ -23,8 +23,7 @@ public class Person {
     }
 
     public boolean getGender() {
-        return gender;
 
+        return gender;
     }
 }
-

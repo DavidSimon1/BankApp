@@ -1,6 +1,6 @@
 package ro.bank.view;
 
-import org.omg.PortableServer.THREAD_POLICY_ID;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import ro.bank.data.source.FileRepository;
 import ro.bank.data.source.Repository;
 import ro.bank.exceptions.UnsupportedAccountType;
@@ -9,14 +9,8 @@ import ro.bank.model.AccountType;
 import ro.bank.model.Person;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Arc2D;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class BankView extends JFrame implements ActionListener {
@@ -26,7 +20,7 @@ public class BankView extends JFrame implements ActionListener {
     private JMenu fileMenu = new JMenu("File");
     private JMenu accountMenu = new JMenu("Account");
     private JMenu personMenu = new JMenu("Person");
-    private JTable table;
+
 
     private JMenuItem save = new JMenuItem("Save Data");
     private JMenuItem load = new JMenuItem("Load Data");
@@ -122,11 +116,19 @@ public class BankView extends JFrame implements ActionListener {
                     if (j == 3) {
                         objects[i][j] = person.getAge();
                     }
-                    if (j == 4) {
 
+                    if (j == 4) {
+                        String gen  = "";
+                        boolean gender ;
+                        if (gen.equals("male")) {
+                            gender = true;
+                        } else {
+                            gen.equals("female");
+                            gender = false;
+                        }
+                        objects[i][j] = person.getGender();
                         //// TODO: 4/8/2017
                         //afisare male/female pt boolean
-                        objects[i][j] = person.getGender();
                     }
                 }
             }
@@ -144,7 +146,6 @@ public class BankView extends JFrame implements ActionListener {
             if (input != null && !input.isEmpty()) {
                 bank.removeAccount(Integer.parseInt(input));
             }
-
         }
         if (e.getSource() == createAccount) {
             String personName;
@@ -158,19 +159,23 @@ public class BankView extends JFrame implements ActionListener {
                 String inputAge = JOptionPane.showInputDialog(panel, "Enter person age");
                 if (inputAge != null && !inputAge.isEmpty()) {
                     age = Integer.parseInt(inputAge);
-                    //// TODO: 4/9/2017
-                    //male/female - true,false
 
-                    String[] genderOptions = {"true", "false"};
+                    String[] genderOptions = {"male", "female"};
                     String inputGender = (String) JOptionPane.showInputDialog(panel, "Enter the person gender",
                             "", JOptionPane.PLAIN_MESSAGE, null, genderOptions, null);
                     if (inputGender != null && !inputGender.isEmpty()) {
-                        gender = Boolean.parseBoolean(inputGender);
+                        if (inputGender.equals("male")) {
+                            gender = true;
+                        } else {
+                            inputGender.equals(("female"));
+                            gender = false;
+                        }
                         String[] accountOptions = {"SPENDING", "SAVING"};
                         String inputAccountType = (String) JOptionPane.showInputDialog(panel, "Enter the account type",
                                 "", JOptionPane.PLAIN_MESSAGE, null, accountOptions, null);
                         if (inputAccountType != null && !inputAccountType.isEmpty()) {
                             accountType = AccountType.valueOf(inputAccountType);
+
                             String inputSold = JOptionPane.showInputDialog(panel, "Enter the sum");
                             if (inputSold != null && !inputSold.isEmpty()) {
                                 sold = Double.parseDouble(inputSold);
@@ -205,7 +210,7 @@ public class BankView extends JFrame implements ActionListener {
         if (e.getSource() == depositMoney) {
             int id;
             double sum;
-            String inputId = JOptionPane.showInputDialog(panel, "Enter the account id");
+            String inputId = JOptionPane.showInputDialog(panel, "Enter the id of the account");
             if (inputId != null && !inputId.isEmpty()) {
                 id = Integer.parseInt(inputId);
                 String inputSum = JOptionPane.showInputDialog(panel, "Enter the sum of money");
@@ -222,7 +227,7 @@ public class BankView extends JFrame implements ActionListener {
         if (e.getSource() == retireMoney) {
             int id;
             double sum;
-            String inputId = JOptionPane.showInputDialog(panel, "Enter the account id");
+            String inputId = JOptionPane.showInputDialog(panel, "Enter the id of the account");
             if (inputId != null && !inputId.isEmpty()) {
                 id = Integer.parseInt(inputId);
                 String inputSum = JOptionPane.showInputDialog(panel, "Enter the sum of money");
@@ -235,10 +240,6 @@ public class BankView extends JFrame implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(panel, "You must enter an id");
             }
-
         }
-        //// TODO: 4/9/2017
-
-        // retire money
     }
 }

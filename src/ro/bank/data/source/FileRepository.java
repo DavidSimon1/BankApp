@@ -37,7 +37,6 @@ public class FileRepository implements Repository {
 
             String result = id + "|" + sold + "|" + name + "|" + age + "|" + gender + "|" + accountType + "\n";
             accountData = accountData + result;
-
         }
         try {
             writer = new FileWriter(input);
@@ -104,7 +103,6 @@ public class FileRepository implements Repository {
                 }
             }
         }
-
         return accounts;
     }
 }
